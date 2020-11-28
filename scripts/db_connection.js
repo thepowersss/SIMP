@@ -1,4 +1,4 @@
-var mysql = require('mysql');
+/*var mysql = require('mysql');
 
 var con = mysql.createConnection({
   host: "140.82.49.189",
@@ -18,3 +18,4 @@ con.query('SELECT * FROM notes', function(error, result, fields) {
 });
 
 con.end();
+*/
