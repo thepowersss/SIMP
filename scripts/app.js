@@ -10,7 +10,7 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+  console.log('Server running at http://${hostname}:${port}/');
 });
 
 /* talk to mySQL here */
@@ -30,7 +30,7 @@ connection.connect(function(err) {
     console.error('error connecting: ' + err.stack);
     return;
   }
-}
+});
 
 con.query('SELECT * FROM notes', function(error, result, fields) {
     if (error) throw error;
