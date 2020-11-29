@@ -25,7 +25,7 @@ var con = mysql.createConnection({
   database: "simp_notes"
 });
 
-connection.connect(function(err) {
+con.connect(function(err) {
   if (err) {
     console.error('error connecting: ' + err.stack);
     return;
