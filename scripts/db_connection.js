@@ -3,6 +3,7 @@ var mysql = require('mysql');
 
 var con = mysql.createConnection({
     host: "140.82.49.189", //read documentation for host, need port?
+    port: "3306",
     user: "sherwine",
     password: "password", // read from password.txt, load into environment variable?
     database: "simp_db"
