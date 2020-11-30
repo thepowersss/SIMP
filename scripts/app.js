@@ -22,6 +22,7 @@ app.post('/save', function(req, res) {
       throw error;
     }
     console.log("The solution is: ", result);
+    res.send(result);
   });
 });
 
