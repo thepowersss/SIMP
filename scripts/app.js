@@ -4,9 +4,10 @@ const path = require('path');
 
 app.get('/',function(req,res){
   res.sendFile('/root/sherwin_SIMP/simp.html');
+  res.sendFile('/root/sherwin_SIMP/scripts/main.js');
+  res.sendFile('/root/sherwin_SIMP/style.css');
   //__dirname : It will resolve to your project folder.
   // ****read
-  // serve
 });
 
 console.log('Running at Port 3000');
