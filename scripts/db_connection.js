@@ -3,9 +3,9 @@ var mysql = require('mysql');
 
 var con = mysql.createConnection({
     host: "140.82.49.189", //read documentation for host, need port?
-    user: "guestuser",
+    user: "sherwine",
     password: "password", // read from password.txt, load into environment variable?
-    database: "simp_notes"
+    database: "simp_db"
 });
 
 con.connect(function (err) {
