@@ -17,3 +17,18 @@ function onExport() {
         console.log(data);
     });
 }
+function changeNote() { // missing parameters
+    axios.post("/update").then(function(data) {
+        console.log(data);
+    });
+}
+function removeNote() {
+    axios.post("/remove").then(function(data) {
+        console.log(data);
+    });
+}
+function insertNote() {
+    axios.post("/insert").then(function(data) {
+        console.log(data);
+    });
+}

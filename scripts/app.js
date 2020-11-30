@@ -19,6 +19,7 @@ app.post('/save', function(req, res) {
   // do stuff with res after mysql.connection 
   con.query('SELECT * FROM notes', function(error, result, fields) {
     if (error) {
+      console.error(error);
       throw error;
     }
     console.log("All the notes: ", result);
@@ -27,12 +28,11 @@ app.post('/save', function(req, res) {
 });
 
 app.post('/remove', function(req, res) { 
+  console.log("here");
   // ****write
-  // when the browser posts onto /save
-  // create/update/delete row with buttons
-  // do stuff with res after mysql.connection 
   con.query('DELETE FROM notes WHERE (pitch = "G2" AND measureNumber = 16);', function(error, result, fields) {
     if (error) {
+      console.error(error);
       throw error;
     }
     console.log("removed: ", result);
@@ -42,11 +42,9 @@ app.post('/remove', function(req, res) {
 
 app.post('/update', function(req, res) { 
   // ****write
-  // when the browser posts onto /save
-  // create/update/delete row with buttons
-  // do stuff with res after mysql.connection 
   con.query('UPDATE notes SET pitch = "G2" WHERE id = 99;', function(error, result, fields) {
     if (error) {
+      console.error(error);
       throw error;
     }
     console.log("updated: ", result);
@@ -56,11 +54,9 @@ app.post('/update', function(req, res) {
 
 app.post('/insert', function(req, res) { 
   // ****write
-  // when the browser posts onto /save
-  // create/update/delete row with buttons
-  // do stuff with res after mysql.connection 
   con.query('INSERT INTO notes VALUES (NULL, 2, 4, 9, 16, "A2");', function(error, result, fields) {
     if (error) {
+      console.error(error);
       throw error;
     }
     console.log("inserted: ", result);

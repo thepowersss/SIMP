@@ -2,7 +2,7 @@
 var mysql = require('mysql');
 
 var con = mysql.createConnection({
-    host: "localhost",
+    host: "140.82.49.189",
     port: "3306",
     user: "sherwine",
     password: "password", // read from password.txt, load into environment variable?
