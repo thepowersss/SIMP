@@ -1,19 +1,15 @@
-const http = require('http'); //what web framework?
+const express = require('express');
+const app = express();
+const path = require('path');
+const router = express.Router();
 
-const hostname = '140.82.49.189';
-const port = 8080;
-
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World');
+router.get('/',function(req,res){
+  res.sendFile(path.join(__dirname+'/simp.html'));
+  //__dirname : It will resolve to your project folder.
 });
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
+//add the router
+app.use('/', router);
+app.listen(process.env.port || 3306);
 
-/* talk to mySQL here */
-var mysql = require('mysql');
-
-// read from password.txt, load into environment variable
+console.log('Running at Port 3306');
