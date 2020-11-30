@@ -4,7 +4,7 @@ const path = require('path');
 const router = express.Router();
 
 router.get('/',function(req,res){
-  res.sendFile(path.join('~/sherwin_SIMP/simp.html'));
+  res.sendFile('/root/sherwin_SIMP/simp.html');
   //__dirname : It will resolve to your project folder.
 });
 
