@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 
-app.use(express.static("../public"));
+app.use(express.static(path.join(__dirname, "../public")));
 
 /*app.get('/',function(req,res){
   //__dirname : It will resolve to your project folder.
