@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <meta charset="utf-8">
+        <title>SIMP</title>
+    </head>
+    <body>
+        <script>
+            var pitch = "";
+            var octave = "";
+        </script>
+
+        <h1 class="centered" style="line-height: 10pt;">SIMP</h1>
+
+        <!-- Staff
+        -->
+        <h3>Staff</h3>
+            <button type="button" onclick='setStaff("staff 1")'>
+            Staff 1 𝄞</button>
+            <button type="button" onclick='setStaff("staff 2")'>
+            Staff 2 𝄢</button>
+        <br>
+
+        <!-- Note Octave
+        -->
+        <h3>Note Octave</h3>
+            <button type="button" onclick='setNoteOctave("2")'>
+            Octave 2</button>
+            <button type="button" onclick='setNoteOctave("3")'>
+            Octave 3</button>
+            <button type="button" onclick='setNoteOctave("4")'>
+            Octave 4</button>
+            <button type="button" onclick='setNoteOctave("5")'>
+            Octave 5</button>
+        <br>
+
+        <!-- Note Pitch
+        -->
+        <h3>Pitch</h3>
+            <button type="button" onclick='setNotePitch("C")'>
+            C</button>
+            <button type="button" onclick='setNotePitch("C#")'>
+            C#</button>
+            <button type="button" onclick='setNotePitch("D")'>
+            D</button>
+            <button type="button" onclick='setNotePitch("D#")'>
+            D#</button>
+            <button type="button" onclick='setNotePitch("E")'>
+            E</button>
+            <button type="button" onclick='setNotePitch("F")'>
+            F</button>
+            <button type="button" onclick='setNotePitch("F#")'>
+            F#</button>
+            <button type="button" onclick='setNotePitch("G")'>
+            G</button>
+            <button type="button" onclick='setNotePitch("G#")'>
+            G#</button>
+            <button type="button" onclick='setNotePitch("A")'>
+            A</button>
+            <button type="button" onclick='setNotePitch("A#")'>
+            A#</button>
+            <button type="button" onclick='setNotePitch("B")'>
+            B</button>
+        <br>
+
+        <!-- Note Duration
+        -->
+        <h3>Duration</h3>
+            <button type="button" onclick='setNoteDuration("whole")'>
+            Whole Note 𝅝</button>
+            <button type="button" onclick='setNoteDuration("half")'>
+            Half Note 𝅗𝅥</button>
+            <button type="button" onclick='setNoteDuration("quarter")'>
+            Quarter Note 𝅘𝅥</button>
+            <button type="button" onclick='setNoteDuration("eighth")'>
+            Eighth Note 𝅘𝅥𝅮</button>
+            <button type="button" onclick='setNoteDuration("sixteenth")'>
+            Sixteenth Note 𝅘𝅥𝅯</button>
+        <br>
+
+        </p>
+        <p>
+            <p id="staff">Staff selected</p>
+        </p>
+        <p>
+            <p id="note">Pitch selected</p>
+        </p>
+        <p>
+            <p id="noteDuration">Duration selected</p>
+        </p>
+
+        <p>
+            <button type="button" onclick=''>
+            Insert Note</button>
+            <button type="button" onclick=''>
+            Change Note</button>
+            <button type="button" onclick=''>
+            Delete Note</button>
+        </p>
+
+        <p>
+            <br>
+            <br>
+            <button onclick="onExport()">Print/Export</button>
+        </p>
+        <script src ="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js"></script>
+        <script src="main.js"></script>
+    </body>
+</html>

@@ -2,7 +2,7 @@
 var mysql = require('mysql');
 
 var con = mysql.createConnection({
-    host: "140.82.49.189", //read documentation for host, need port?
+    host: "localhost",
     port: "3306",
     user: "sherwine",
     password: "password", // read from password.txt, load into environment variable?
@@ -17,11 +17,14 @@ con.connect(function (err) {
     }
 });
 
+/*
 con.query('SELECT * FROM notes', function(error, result, fields) {
     if (error) {
     	throw error;
     }
     console.log("The solution is: ", result);
 });
-
-con.end();
+*/
+module.exports = {
+    connection: con
+}
