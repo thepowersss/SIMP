@@ -21,7 +21,49 @@ app.post('/save', function(req, res) {
     if (error) {
       throw error;
     }
-    console.log("The solution is: ", result);
+    console.log("All the notes: ", result);
+    res.send(result);
+  });
+});
+
+app.post('/remove', function(req, res) { 
+  // ****write
+  // when the browser posts onto /save
+  // create/update/delete row with buttons
+  // do stuff with res after mysql.connection 
+  con.query('DELETE FROM notes WHERE (pitch = "G2" AND measureNumber = 16);', function(error, result, fields) {
+    if (error) {
+      throw error;
+    }
+    console.log("removed: ", result);
+    res.send(result);
+  });
+});
+
+app.post('/update', function(req, res) { 
+  // ****write
+  // when the browser posts onto /save
+  // create/update/delete row with buttons
+  // do stuff with res after mysql.connection 
+  con.query('UPDATE notes SET pitch = "G2" WHERE id = 99;', function(error, result, fields) {
+    if (error) {
+      throw error;
+    }
+    console.log("updated: ", result);
+    res.send(result);
+  });
+});
+
+app.post('/insert', function(req, res) { 
+  // ****write
+  // when the browser posts onto /save
+  // create/update/delete row with buttons
+  // do stuff with res after mysql.connection 
+  con.query('INSERT INTO notes VALUES (NULL, 2, 4, 9, 16, "A2");', function(error, result, fields) {
+    if (error) {
+      throw error;
+    }
+    console.log("inserted: ", result);
     res.send(result);
   });
 });
