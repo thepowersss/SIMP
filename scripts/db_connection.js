@@ -6,7 +6,7 @@ var con = mysql.createConnection({
     port: "3306",
     user: "sherwine",
     password: "password", // read from password.txt, load into environment variable?
-    database: "simp_db",
+    database: "simp_notes",
     insecureAuth: true
 });
 
