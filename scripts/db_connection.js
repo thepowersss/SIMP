@@ -26,5 +26,5 @@ con.query('SELECT * FROM notes', function(error, result, fields) {
 });
 */
 module.exports = {
-    connection: con
+    con
 }

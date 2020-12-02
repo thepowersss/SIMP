@@ -1,7 +1,13 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const con = require('./db_connection.js').connection;
+const {con} = require('./db_connection.js');
+const {findMostRecentNote} = require("./query_functions.js");
+const superpitch = require("../public/main.js");
+
+var most_recent_beat;
+var pitch = superpitch.superpitch;
+//console.log(pitch);
 
 app.use(express.static(path.join(__dirname, "../public")));
 
@@ -27,10 +33,10 @@ app.post('/save', function(req, res) {
   });
 });
 
+// Remove most recent note (biggest note id)
 app.post('/remove', function(req, res) { 
-  console.log("here");
   // ****write
-  con.query('DELETE FROM notes WHERE (pitch = "G2" AND measureNumber = 16);', function(error, result, fields) {
+  con.query('DELETE FROM notes ORDER BY id DESC LIMIT 1;', function(error, result, fields) {
     if (error) {
       console.error(error);
       throw error;
@@ -42,7 +48,11 @@ app.post('/remove', function(req, res) {
 
 app.post('/update', function(req, res) { 
   // ****write
-  con.query('UPDATE notes SET pitch = "G2" WHERE id = 99;', function(error, result, fields) {
+  console.log("superpitch: " + superpitch);
+  console.log("pitch: " + pitch);
+  //console.log(superpitch.pitch);
+  //console.log(superpitch.octave);
+  con.query('UPDATE notes SET pitch = ? ORDER BY id DESC LIMIT 1;', [pitch], function(error, result, fields) {
     if (error) {
       console.error(error);
       throw error;
@@ -54,6 +64,7 @@ app.post('/update', function(req, res) {
 
 app.post('/insert', function(req, res) { 
   // ****write
+  most_recent_beat = findMostRecentNote()[0].beat;
   con.query('INSERT INTO notes VALUES (NULL, 2, 4, 9, 16, "A2");', function(error, result, fields) {
     if (error) {
       console.error(error);

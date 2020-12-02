@@ -13,6 +13,16 @@
 
         <h1 class="centered" style="line-height: 10pt;">SIMP</h1>
 
+        <h3>Title of Piece</h3>
+        <input type="text" id="pieceName" value="Minuet in G Major">
+        <button type="button" onclick=''>
+        Enter Title</button>
+
+        <h3>Composer Name</h3>
+        <input type="text" id="composer" value="Mickey">
+        <button type="button" onclick=''>
+        Enter Composer</button>
+
         <!-- Staff
         -->
         <h3>Staff</h3>
@@ -62,6 +72,8 @@
             A#</button>
             <button type="button" onclick='setNotePitch("B")'>
             B</button>
+            <button type="button" onclick='setNotePitch(null)'>
+            Rest </button>
         <br>
 
         <!-- Note Duration
@@ -93,7 +105,7 @@
         <p>
             <button type="button" onclick='insertNote()'>
             Insert Note</button>
-            <button type="button" onclick='changeNote()'>
+            <button type="button" onclick='changeNote(pitch, octave)'>
             Change Note</button>
             <button type="button" onclick='removeNote()'>
             Delete Note</button>
@@ -104,7 +116,7 @@
             <br>
             <button onclick="onExport()">Print/Export</button>
         </p>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js"></script> <!-- All the axios.post stuff uses this-->
         <script src="main.js"></script>
     </body>
 </html>
