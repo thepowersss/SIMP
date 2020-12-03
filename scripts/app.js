@@ -164,7 +164,7 @@ app.post('/update', function(req, res) {
 app.post('/insert', function(req, res) { 
   var superpitch = req.body.superpitch;
   var staff = req.body.staff;
-  var duration = req.body.staff;
+  var duration = req.body.duration;
   var beat, measure_no; // some calculation needed
   var mostRecentNote;
 
