@@ -8,10 +8,10 @@ const {superpitch} = require("../public/main.js");
 // turns the mysql export query into csv
 const fastcsv = require("fast-csv");
 const fs = require("fs");
-const ws1 = fs.createWriteStream("notes.csv");
-const ws2 = fs.createWriteStream("piece.csv");
-const ws3 = fs.createWriteStream("staff.csv");
-const ws4 = fs.createWriteStream("measure.csv");
+var ws1 = fs.createWriteStream("notes.csv");
+var ws2 = fs.createWriteStream("piece.csv");
+var ws3 = fs.createWriteStream("staff.csv");
+var ws4 = fs.createWriteStream("measure.csv");
 
 app.use(express.static(path.join(__dirname, "../public")));
 
@@ -30,16 +30,19 @@ app.post('/export', function(req, res) {
   // create/update/delete row with buttons
   // do stuff with res after mysql.connection 
 
+  var dummyResult;
+
   // notes table to csv
   con.query('SELECT * FROM notes', function(error, result, fields) {
     if (error) {
       console.error(error);
       throw error;
     }
+    ws1 = fs.createWriteStream("notes.csv");
     const jsonData = JSON.parse(JSON.stringify(result));
     console.log("All the notes: ", jsonData);
     //console.log("All the notes: ", result);
-    res.send(result);
+    //res.send(result); //duplicate
     fastcsv
       .write(jsonData, { headers: false })
       .on("finish", function() {
@@ -54,6 +57,7 @@ app.post('/export', function(req, res) {
       console.error(error);
       throw error;
     }
+    ws2 = fs.createWriteStream("piece.csv");
     const jsonData = JSON.parse(JSON.stringify(result));
     console.log("Piece title + composer: ", jsonData);
     //console.log("All the notes: ", result);
@@ -72,6 +76,7 @@ app.post('/export', function(req, res) {
       console.error(error);
       throw error;
     }
+    ws3 = fs.createWriteStream("staff.csv");
     const jsonData = JSON.parse(JSON.stringify(result));
     console.log("staffs: ", jsonData);
     //console.log("All the notes: ", result);
@@ -90,16 +95,19 @@ app.post('/export', function(req, res) {
       console.error(error);
       throw error;
     }
+    ws4 = fs.createWriteStream("measure.csv");
     const jsonData = JSON.parse(JSON.stringify(result));
     console.log("staffs: ", jsonData);
     //console.log("All the notes: ", result);
-    //res.send(result); duplicate
     fastcsv
       .write(jsonData, { headers: false })
       .on("finish", function() {
         console.log("Write to measure.csv successfully!");
       })
       .pipe(ws4);
+
+    //res.send(result);
+    dummyResult = result;
   });
 
   //shell commands to execute the data flow
@@ -110,6 +118,8 @@ app.post('/export', function(req, res) {
   console.log('Running lilypond\n', output2);
   const output3 = execSync('mv "Minuet in G major.pdf" public', { encoding: 'utf-8' });
   console.log('moving result file to correct folder\n', output3);
+
+  res.send(dummyResult);
 });
 
 // Remove most recent note (biggest note id)
@@ -123,6 +133,16 @@ app.post('/remove', function(req, res) {
     console.log("removed: ", result);
     res.send(result);
   });
+  /* some jiggling needs to be done with 'measure' table, but code should still work without this
+  con.query('DELETE FROM measure ORDER BY measureNum DESC LIMIT 1;', function(error, result, fields) {
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+    console.log("removed: ", result);
+    res.send(result);
+  });
+  */
 });
 
 app.post('/update', function(req, res) { 

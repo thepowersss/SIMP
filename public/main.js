@@ -23,7 +23,8 @@ function onExport() {
     });
     toggleText(); // makes download link appear
 }
-function changeNote() {
+function changeNote(myPitch, myOctave) {
+    calcSuperpitch(myPitch, myOctave);
     axios.post("/update").then(function(data) {
         console.log(data);
     });
@@ -42,8 +43,6 @@ function toggleText() {
   var text = document.getElementById("download");
   if (text.style.display === "none") {
     text.style.display = "block";
-  } else {
-    text.style.display = "none";
   }
 }
 
