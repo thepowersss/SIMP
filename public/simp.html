@@ -13,6 +13,7 @@
 
         <h1 class="centered" style="line-height: 10pt;">SIMP</h1>
 
+    <!-- Not working yet...
         <h3>Title of Piece</h3>
         <input type="text" id="pieceName" value="Minuet in G Major">
         <button type="button" onclick=''>
@@ -22,6 +23,7 @@
         <input type="text" id="composer" value="Mickey">
         <button type="button" onclick=''>
         Enter Composer</button>
+    -->
 
         <!-- Staff
         -->
@@ -105,7 +107,7 @@
         <p>
             <button type="button" onclick='insertNote()'>
             Insert Note</button>
-            <button type="button" onclick='changeNote(pitch, octave)'>
+            <button type="button" onclick='changeNote(pitch,octave)'>
             Change Note</button>
             <button type="button" onclick='removeNote()'>
             Delete Note</button>
@@ -115,6 +117,7 @@
             <br>
             <br>
             <button onclick="onExport()">Print/Export</button>
+            <p id='download' style='display: none'><a href = "Minuet in G major.pdf">Download score</a></p>     
         </p>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js"></script> <!-- All the axios.post stuff uses this-->
         <script src="main.js"></script>

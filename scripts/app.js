@@ -2,35 +2,114 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const {con} = require('./db_connection.js');
-const {findMostRecentNote} = require("./query_functions.js");
-const superpitch = require("../public/main.js");
+// const {findMostRecentNote} = require("./query_functions.js"); // file is unused
+const {superpitch} = require("../public/main.js");
 
-var most_recent_beat;
-var pitch = superpitch.superpitch;
-//console.log(pitch);
+// turns the mysql export query into csv
+const fastcsv = require("fast-csv");
+const fs = require("fs");
+const ws1 = fs.createWriteStream("notes.csv");
+const ws2 = fs.createWriteStream("piece.csv");
+const ws3 = fs.createWriteStream("staff.csv");
+const ws4 = fs.createWriteStream("measure.csv");
 
 app.use(express.static(path.join(__dirname, "../public")));
 
-/*app.get('/',function(req,res){
+/*
+app.get('/',function(req,res){
   //__dirname : It will resolve to your project folder.
   // ****read
 });
 */
+
 console.log('Running at Port 3000');
 
-app.post('/save', function(req, res) { 
+app.post('/export', function(req, res) { 
   // ****write
   // when the browser posts onto /save
   // create/update/delete row with buttons
   // do stuff with res after mysql.connection 
+
+  // notes table to csv
   con.query('SELECT * FROM notes', function(error, result, fields) {
     if (error) {
       console.error(error);
       throw error;
     }
-    console.log("All the notes: ", result);
+    const jsonData = JSON.parse(JSON.stringify(result));
+    console.log("All the notes: ", jsonData);
+    //console.log("All the notes: ", result);
     res.send(result);
+    fastcsv
+      .write(jsonData, { headers: false })
+      .on("finish", function() {
+        console.log("Write to notes.csv successfully!");
+      })
+      .pipe(ws1);
   });
+
+  // piece table to csv
+  con.query('SELECT * FROM piece', function(error, result, fields) {
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+    const jsonData = JSON.parse(JSON.stringify(result));
+    console.log("Piece title + composer: ", jsonData);
+    //console.log("All the notes: ", result);
+    //res.send(result); duplicate
+    fastcsv
+      .write(jsonData, { headers: false })
+      .on("finish", function() {
+        console.log("Write to piece.csv successfully!");
+      })
+      .pipe(ws2);
+  });
+
+  // staff table to csv
+  con.query('SELECT * FROM staff', function(error, result, fields) {
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+    const jsonData = JSON.parse(JSON.stringify(result));
+    console.log("staffs: ", jsonData);
+    //console.log("All the notes: ", result);
+    //res.send(result); duplicate
+    fastcsv
+      .write(jsonData, { headers: false })
+      .on("finish", function() {
+        console.log("Write to staff.csv successfully!");
+      })
+      .pipe(ws3);
+  });
+
+  // measure table to csv
+  con.query('SELECT * FROM measure', function(error, result, fields) {
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+    const jsonData = JSON.parse(JSON.stringify(result));
+    console.log("staffs: ", jsonData);
+    //console.log("All the notes: ", result);
+    //res.send(result); duplicate
+    fastcsv
+      .write(jsonData, { headers: false })
+      .on("finish", function() {
+        console.log("Write to measure.csv successfully!");
+      })
+      .pipe(ws4);
+  });
+
+  //shell commands to execute the data flow
+  const execSync = require('child_process').execSync;
+  const output1 = execSync('python csv_to_ly.py', { encoding: 'utf-8' });
+  console.log('Running python script csv_to_ly.py\n', output1);
+  const output2 = execSync('lilypond "Minuet in G major.ly"', { encoding: 'utf-8' });
+  console.log('Running lilypond\n', output2);
+  const output3 = execSync('mv "Minuet in G major.pdf" public', { encoding: 'utf-8' });
+  console.log('moving result file to correct folder\n', output3);
 });
 
 // Remove most recent note (biggest note id)
@@ -49,10 +128,8 @@ app.post('/remove', function(req, res) {
 app.post('/update', function(req, res) { 
   // ****write
   console.log("superpitch: " + superpitch);
-  console.log("pitch: " + pitch);
-  //console.log(superpitch.pitch);
-  //console.log(superpitch.octave);
-  con.query('UPDATE notes SET pitch = ? ORDER BY id DESC LIMIT 1;', [pitch], function(error, result, fields) {
+  //console.log("pitch: " + pitch);
+  con.query('UPDATE notes SET pitch = ? ORDER BY id DESC LIMIT 1;', [superpitch], function(error, result, fields) {
     if (error) {
       console.error(error);
       throw error;
