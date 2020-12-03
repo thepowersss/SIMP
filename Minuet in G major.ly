@@ -10,7 +10,7 @@ topLine = {
 }
 
 botLine = {
- g2 a4 b2. c2. b2. a2. g2. d'4 b4 g4 d'4 d8 c'8 b8 a8 b2 a4 g4 b4 g4 c'2. b4 c'8 b8 a8 g8 a2 fis4 g2 b4 c'4 d'4 d4 g2 g,4
+ g2 a4 b2. c2. b2. a2. g2. d'4 b4 g4 d'4 d8 c'8 b8 a8 b2 a4 g4 b4 g4 c'2. b4 c'8 b8 a8 g8 a2 fis4 g2 b4 c'4 d'4 d4 g2 g,4 dis,8 dis,8 dis,8 dis,8 dis,8 dis,8 dis,8 dis,8 dis,8 dis,8 dis,8 dis,8
 }
 \new GrandStaff <<
 \new Staff {

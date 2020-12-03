@@ -114,9 +114,8 @@ app.post('/export', function(req, res) {
   const execSync = require('child_process').execSync;
   const output1 = execSync('python csv_to_ly.py', { encoding: 'utf-8' });
   console.log('Running python script csv_to_ly.py\n', output1);
-  
-  var file_name = "Minuet in G major.ly"; // hardcoded, change to user input later
-  const output2 = execSync('lilypond ' + file_name, { encoding: 'utf-8' });
+  // hardcoded, change to user input later
+  const output2 = execSync('lilypond "Minuet in G major.ly"', { encoding: 'utf-8' });
   console.log('Running lilypond\n', output2);
   const output3 = execSync('mv "Minuet in G major.pdf" public', { encoding: 'utf-8' });
   console.log('moving result file to correct folder\n', output3);
@@ -147,8 +146,8 @@ app.post('/remove', function(req, res) {
   */
 });
 
+// change note query
 app.post('/update', function(req, res) { 
-  // ****write
   var superpitch = req.body.superpitch; // gives request body in object form
   console.log("superpitch: " + superpitch);
   con.query('UPDATE notes SET pitch = ? ORDER BY id DESC LIMIT 1;', [superpitch], function(error, result, fields) {
@@ -161,15 +160,43 @@ app.post('/update', function(req, res) {
   });
 });
 
+// insert note query
 app.post('/insert', function(req, res) { 
-  // ****write
-  con.query('INSERT INTO notes VALUES (NULL, 2, 4, 9, 16, "A2");', function(error, result, fields) {
+  var superpitch = req.body.superpitch;
+  var staff = req.body.staff;
+  var duration = req.body.staff;
+  var beat, measure_no; // some calculation needed
+  var mostRecentNote;
+
+  // select most recent note
+  con.query('SELECT * FROM notes ORDER BY id DESC LIMIT 1', function(error, result, fields) {
     if (error) {
       console.error(error);
       throw error;
     }
-    console.log("inserted: ", result);
-    res.send(result);
+    mostRecentNote = result;
+    console.log("most recent note: " + mostRecentNote);
+    console.log("most recent note beat: " + mostRecentNote[0].beat);
+    console.log("most recent note duration: " + mostRecentNote[0].duration);
+    beat = mostRecentNote[0].beat + mostRecentNote[0].duration;
+    if (beat < 16) {
+      measure_no = mostRecentNote[0].measureNumber;
+    } else {
+      measure_no = mostRecentNote[0].measureNumber + 1;
+      beat = 1;
+    }
+    console.log("new note beat: " + beat);
+    console.log("new note measure: " + measure_no);
+    console.log("new note duration: " + duration);
+    // insert new note
+    con.query('INSERT INTO notes VALUES (NULL, ?, ?, ?, ?, ?);', [staff, duration, beat, measure_no, superpitch], function(error, result, fields) {
+      if (error) {
+        console.error(error);
+        throw error;
+      }
+      console.log("inserted: ", result);
+      res.send(result);
+    });
   });
 });
 

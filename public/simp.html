@@ -9,6 +9,8 @@
         <script>
             var pitch = "";
             var octave = "";
+            var staff;
+            var duration;
         </script>
 
         <h1 class="centered" style="line-height: 10pt;">SIMP</h1>
@@ -28,9 +30,9 @@
         <!-- Staff
         -->
         <h3>Staff</h3>
-            <button type="button" onclick='setStaff("staff 1")'>
+            <button type="button" onclick='setStaff("1")'>
             Staff 1 𝄞</button>
-            <button type="button" onclick='setStaff("staff 2")'>
+            <button type="button" onclick='setStaff("2")'>
             Staff 2 𝄢</button>
         <br>
 
@@ -78,34 +80,34 @@
             Rest </button>
         <br>
 
-        <!-- Note Duration
+        <!-- Note Duration (whole notes and sixteenth notes not supported in 3/4)
         -->
         <h3>Duration</h3>
-            <button type="button" onclick='setNoteDuration("whole")'>
+            <button type="button" onclick=''> 
             Whole Note 𝅝</button>
-            <button type="button" onclick='setNoteDuration("half")'>
+            <button type="button" onclick='setNoteDuration("8")'>
             Half Note 𝅗𝅥</button>
-            <button type="button" onclick='setNoteDuration("quarter")'>
+            <button type="button" onclick='setNoteDuration("4")'>
             Quarter Note 𝅘𝅥</button>
-            <button type="button" onclick='setNoteDuration("eighth")'>
+            <button type="button" onclick='setNoteDuration("2")'>
             Eighth Note 𝅘𝅥𝅮</button>
-            <button type="button" onclick='setNoteDuration("sixteenth")'>
+            <button type="button" onclick=''>
             Sixteenth Note 𝅘𝅥𝅯</button>
         <br>
 
         </p>
         <p>
-            <p id="staff">Staff selected</p>
+            Staff: <p id="staff">Staff selected</p>
         </p>
         <p>
-            <p id="note">Pitch selected</p>
+            Pitch: <p id="note">Pitch selected</p>
         </p>
         <p>
-            <p id="noteDuration">Duration selected</p>
+            Duration: <p id="duration">Duration selected</p>
         </p>
 
         <p>
-            <button type="button" onclick='insertNote()'>
+            <button type="button" onclick='insertNote(window.pitch, window.octave, window.staff, window.duration)'>
             Insert Note</button>
             <button type="button" onclick='changeNote(window.pitch, window.octave)'>
             Change Note</button>

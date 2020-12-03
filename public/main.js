@@ -1,17 +1,32 @@
-function setNotePitch(note) {
-    window.pitch = note;
-    document.getElementById("note").innerHTML = pitch + octave;
+function setNotePitch(myNote) {
+    window.pitch = myNote;
+    document.getElementById("note").innerHTML = window.pitch + window.octave;
 }
-function setNoteDuration(note) {
-    document.getElementById("noteDuration").innerHTML = note;
+function setNoteOctave(myNote) {
+    window.octave = myNote;
+    document.getElementById("note").innerHTML = window.pitch + window.octave;
 }
-function setStaff(staff) {
-    document.getElementById("staff").innerHTML = staff;
+function setNoteDuration(myDuration) {
+    window.duration = myDuration;
+    if (myDuration == "1") {
+        document.getElementById("duration").innerHTML = "sixteenth";
+    } else if (myDuration == "2") {
+        document.getElementById("duration").innerHTML = "eighth";
+    } else if (myDuration == "4") {
+        document.getElementById("duration").innerHTML = "quarter";
+    } else if (myDuration == "8") {
+        document.getElementById("duration").innerHTML = "half";
+    } else if (myDuration == "16") {
+        document.getElementById("duration").innerHTML = "whole";
+    } else {
+        document.getElementById("duration").innerHTML = "error";
+    }
 }
-function setNoteOctave(note) {
-    window.octave = note;
-    document.getElementById("note").innerHTML = pitch + octave;
+function setStaff(myStaff) {
+    window.staff = myStaff;
+    document.getElementById("staff").innerHTML = window.staff;
 }
+
 
 function onExport() {
     axios.post("/export").then(function(data) {
@@ -34,8 +49,14 @@ function removeNote() {
         console.log(data);
     });
 }
-function insertNote() {
-    axios.post("/insert").then(function(data) {
+function insertNote(myPitch, myOctave, myStaff, myDuration) {
+    var superpitch = myPitch + myOctave;
+    axios.post("/insert", {
+        superpitch: superpitch,
+        staff: staff,
+        duration: duration
+    })
+    .then(function(data) {
         console.log(data);
     });
 }
