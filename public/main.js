@@ -13,10 +13,6 @@ function setNoteOctave(note) {
     document.getElementById("note").innerHTML = pitch + octave;
 }
 
-function calcSuperpitch(myPitch, myOctave) {
-    return myPitch + myOctave;
-}
-
 function onExport() {
     axios.post("/export").then(function(data) {
         console.log(data);
@@ -24,8 +20,12 @@ function onExport() {
     toggleText(); // makes download link appear
 }
 function changeNote(myPitch, myOctave) {
-    calcSuperpitch(myPitch, myOctave);
-    axios.post("/update").then(function(data) {
+    var superpitch = myPitch + myOctave;
+    //console.log("mypitch + myoctave: " + myPitch + ", " + myOctave);
+    axios.post("/update", {
+        superpitch: superpitch
+    })
+    .then(function(data) {
         console.log(data);
     });
 }
@@ -44,14 +44,4 @@ function toggleText() {
   if (text.style.display === "none") {
     text.style.display = "block";
   }
-}
-
-
-//superpitch = "E2";
-
-//module.exports = {superpitch, pitch, octave};
-//module.exports.superpitch = superpitch;
-
-module.exports = { 
-    calcSuperpitch
 }

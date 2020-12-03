@@ -3,7 +3,7 @@ const app = express();
 const path = require('path');
 const {con} = require('./db_connection.js');
 // const {findMostRecentNote} = require("./query_functions.js"); // file is unused
-const {superpitch} = require("../public/main.js");
+//const {superpitch} = require("../public/main.js");
 
 // turns the mysql export query into csv
 const fastcsv = require("fast-csv");
@@ -14,7 +14,7 @@ var ws3 = fs.createWriteStream("staff.csv");
 var ws4 = fs.createWriteStream("measure.csv");
 
 app.use(express.static(path.join(__dirname, "../public")));
-
+app.use(express.json()); // express.json() returns a javascript object that parses the body into json
 /*
 app.get('/',function(req,res){
   //__dirname : It will resolve to your project folder.
@@ -110,11 +110,13 @@ app.post('/export', function(req, res) {
     dummyResult = result;
   });
 
-  //shell commands to execute the data flow
+  // shell commands to execute the data flow
   const execSync = require('child_process').execSync;
   const output1 = execSync('python csv_to_ly.py', { encoding: 'utf-8' });
   console.log('Running python script csv_to_ly.py\n', output1);
-  const output2 = execSync('lilypond "Minuet in G major.ly"', { encoding: 'utf-8' });
+  
+  var file_name = "Minuet in G major.ly"; // hardcoded, change to user input later
+  const output2 = execSync('lilypond ' + file_name, { encoding: 'utf-8' });
   console.log('Running lilypond\n', output2);
   const output3 = execSync('mv "Minuet in G major.pdf" public', { encoding: 'utf-8' });
   console.log('moving result file to correct folder\n', output3);
@@ -147,8 +149,8 @@ app.post('/remove', function(req, res) {
 
 app.post('/update', function(req, res) { 
   // ****write
+  var superpitch = req.body.superpitch; // gives request body in object form
   console.log("superpitch: " + superpitch);
-  //console.log("pitch: " + pitch);
   con.query('UPDATE notes SET pitch = ? ORDER BY id DESC LIMIT 1;', [superpitch], function(error, result, fields) {
     if (error) {
       console.error(error);
@@ -161,7 +163,6 @@ app.post('/update', function(req, res) {
 
 app.post('/insert', function(req, res) { 
   // ****write
-  most_recent_beat = findMostRecentNote()[0].beat;
   con.query('INSERT INTO notes VALUES (NULL, 2, 4, 9, 16, "A2");', function(error, result, fields) {
     if (error) {
       console.error(error);
