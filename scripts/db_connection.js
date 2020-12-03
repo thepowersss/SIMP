@@ -17,14 +17,6 @@ con.connect(function (err) {
     }
 });
 
-/*
-con.query('SELECT * FROM notes', function(error, result, fields) {
-    if (error) {
-    	throw error;
-    }
-    console.log("The solution is: ", result);
-});
-*/
 module.exports = {
     con
 }
