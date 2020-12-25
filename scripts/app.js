@@ -115,9 +115,9 @@ app.post('/export', function(req, res) {
   const output1 = execSync('python csv_to_ly.py', { encoding: 'utf-8' });
   console.log('Running python script csv_to_ly.py\n', output1);
   // hardcoded, change to user input later
-  const output2 = execSync('lilypond "Minuet in G major.ly"', { encoding: 'utf-8' });
+  const output2 = execSync('lilypond "piece.ly"', { encoding: 'utf-8' });
   console.log('Running lilypond\n', output2);
-  const output3 = execSync('mv "Minuet in G major.pdf" public', { encoding: 'utf-8' });
+  const output3 = execSync('mv "piece.pdf" public', { encoding: 'utf-8' });
   console.log('moving result file to correct folder\n', output3);
 
   res.send(dummyResult);

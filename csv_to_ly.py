@@ -10,6 +10,8 @@ num_of_measures = ''
 staff1 = ''
 staff2 = ''
 accidental = ''
+pieceID = ''
+pdf = ''
 
 def split(word):
     return [char for char in word]
@@ -108,10 +110,12 @@ piece = 'piece.csv'
 with open(piece, 'r') as csvfile3:
     datareader3 = csvfile3.readlines()
     for row in datareader3:
-        title = row.split(',')[0]
-        composer = row.split(',')[1]
-        time_sig = row.split(',')[2]
-        num_of_measures = row.split(',')[3]
+        pieceID = row.split(',')[0]
+        title = row.split(',')[1]
+        composer = row.split(',')[2]
+        time_sig = row.split(',')[3]
+        num_of_measures = row.split(',')[4]
+        pdf = row.split(',')[5]
     #print("\n")
 
 
@@ -127,7 +131,7 @@ with open(staff, 'r') as csvfile4:
             staff2 = staff_type
     #print("\n")
 
-file_ly = open(title + '.ly', 'w+')
+file_ly = open('piece.ly', 'w+')
 file_ly.write("""\\version "2.20.0"
     
 \header{
