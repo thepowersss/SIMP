@@ -13,14 +13,21 @@ var ws2 = fs.createWriteStream("piece.csv");
 var ws3 = fs.createWriteStream("staff.csv");
 var ws4 = fs.createWriteStream("measure.csv");
 
-app.use(express.static(path.join(__dirname, "../public")));
+app.use(express.static(path.join(__dirname, "../public"))); // everything in /public is served statically (visible)
 app.use(express.json()); // express.json() returns a javascript object that parses the body into json
 /*
-app.get('/',function(req,res){
+app.get('/', function(req,res){
   //__dirname : It will resolve to your project folder.
   // ****read
 });
 */
+
+
+app.get('/piece/:pieceID', function(req,res){
+  res.sendFile(path.join(__dirname, '../public/simp.html'));
+  // serve simp.html but the piece corresponds to the id in the url (pieceID)
+});
+
 
 console.log('Running at Port 3000');
 
